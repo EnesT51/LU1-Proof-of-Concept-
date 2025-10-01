@@ -1,0 +1,6 @@
+<div class="movie-card">
+    <img [src]="movie.poster" alt="{{ movie.title }}" />
+    <h3>{{ movie.title }} ({{ movie.year }})</h3>
+    <p>{{ movie.plot }}</p>
+    <span *ngFor="let genre of movie.genres">{{ genre }}</span>
+</div>
