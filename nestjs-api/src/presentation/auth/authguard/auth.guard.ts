@@ -1,7 +1,6 @@
 import { AbstractTokenService } from "src/core/auth/security/contract/abstract.token.service";
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException} from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { Request } from "express";
 import { Allow_Anonymous } from "./allowanonymous.decoder";
 
 @Injectable()
@@ -18,7 +17,7 @@ export class AuthGuard implements CanActivate {
             return true;
         }
         const request = context.switchToHttp().getRequest();
-        const token = this.extractTokenFromHeader(request);
+        const token = request.cookies?.token; // Haal de token op uit de cookies
         if (!token) {
             throw new UnauthorizedException("Geen token gevonden");
         }
@@ -30,9 +29,5 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedException("Ongeldige token");
         }
         return true;
-    }
-    private extractTokenFromHeader(request: Request): string | undefined {
-        const [type, token] = request.headers.authorization?.split(' ') ?? [];
-        return type === 'Bearer' ? token : undefined;
     }
 }
