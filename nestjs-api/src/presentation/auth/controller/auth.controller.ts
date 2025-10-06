@@ -12,9 +12,9 @@ export class AuthController {
 
     @AllowAnonymous()
     @Post('register')
-    async register(@Body() createStudentDto: CreateStudentDto): Promise<StudentResponseDto> {
-        const student = await this.authService.register(createStudentDto);
-        return new StudentResponseDto(student.id, student.email, student.username, student.name, student.birthDate);
+    async register(@Body() createStudentDto: CreateStudentDto): Promise<{ message: string }> {
+        await this.authService.register(createStudentDto);
+        return { message: 'Registreren gelukt'};
     }
     @AllowAnonymous()
     @Post('login')
