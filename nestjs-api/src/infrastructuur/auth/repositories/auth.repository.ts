@@ -12,12 +12,12 @@ export class AuthRepository extends AbstractAuthRepository {
     async findByEmail(email: string): Promise<Student | null> {
         const studentCollection = this.dbConnection.collection<Student>("student");
         const student = await studentCollection.findOne({ email: email });
-        return student ? new Student(student._id.toString(), student.email, student.username, student.passwordHash, student.name, student.birthDate) : null;
+        return student ? new Student(student._id.toString(), student.email, student.surname, student.passwordHash, student.name, student.birthDate) : null;
     }
 
     async create(student: Student): Promise<Student> {
         const studentCollection = this.dbConnection.collection<Student>("student");
         const result = await studentCollection.insertOne(student);
-        return new Student(result.insertedId.toString(), student.email, student.username, student.passwordHash, student.name, student.birthDate);
+        return new Student(result.insertedId.toString(), student.email, student.surname, student.passwordHash, student.name, student.birthDate);
     }
 }

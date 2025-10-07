@@ -17,7 +17,7 @@ export class CreateStudentDto {
     @IsNotEmpty()
     @MinLength(2)
     @MaxLength(30)
-    username: string;
+    surname: string;
 
     @IsString()
     @IsNotEmpty()

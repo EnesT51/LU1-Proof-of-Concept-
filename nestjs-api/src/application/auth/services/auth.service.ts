@@ -22,7 +22,7 @@ export class AuthService {
         }
         try{
             dto.password = await this.hashingService.hash(dto.password);
-            const student = new Student("", dto.email, dto.username, dto.password, dto.name, dto.birthDate);
+            const student = new Student("", dto.email, dto.surname, dto.password, dto.name, dto.birthDate);
             return await this.authRepository.create(student);
         } catch (error) {
             throw new InternalServerErrorException("Error bij registreren");

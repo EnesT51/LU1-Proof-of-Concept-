@@ -38,8 +38,8 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK)
     @Get('user')
-    async getProfile(@Req() req): Promise<any> {
+    async getUser(@Req() req: any): Promise<any> {
         const user = req.user; // Haal de gebruiker op uit het request object dat door de AuthGuard is toegevoegd
-        return { user };
+        return { user, success: true, message: 'Gebruiker opgehaald'};
     }
 }
