@@ -33,12 +33,11 @@ export class AuthService {
     }
 
     logout(): Observable<any> {
-        return this.http.post<{ success: boolean }>(`${this.apiUrl}/logout`, {}, { withCredentials: true })
+        return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
         .pipe(
             tap(() => {
                 this.isAuthenticated(false);
             }),
-            map(response => response.success),
             catchError(this.handleError)
         );
     }
