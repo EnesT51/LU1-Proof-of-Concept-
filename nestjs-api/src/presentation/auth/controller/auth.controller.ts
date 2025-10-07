@@ -1,31 +1,45 @@
 import { AuthService } from "src/application/auth/services/auth.service";
-import { Body, Controller, Post, Res } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { CreateStudentDto } from "../Dto/create.student.dto";
 import { LoginStudentDto } from "../Dto/login.student.dto";
-import { StudentResponseDto } from "../Dto/student.response.dto";
 import type { Response } from "express";
 import { AllowAnonymous } from "../authguard/allowanonymous.decoder";
+import { AuthGuard } from "../authguard/auth.guard";
+import { HttpCode } from "@nestjs/common";
+import { HttpStatus } from "@nestjs/common";
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @AllowAnonymous()
+    @HttpCode(HttpStatus.CREATED)
     @Post('register')
-    async register(@Body() createStudentDto: CreateStudentDto): Promise<{ message: string }> {
+    async register(@Body() createStudentDto: CreateStudentDto): Promise<{ success: boolean; message: string }> {
         await this.authService.register(createStudentDto);
-        return { message: 'Registreren gelukt'};
+        return { success: true, message: 'Registreren gelukt' };
     }
     @AllowAnonymous()
+    @HttpCode(HttpStatus.OK)
     @Post('login')
-    async login(@Body() loginStudentDto: LoginStudentDto, @Res({ passthrough: true }) res: Response): Promise<{ message: string }> {
+    async login(@Body() loginStudentDto: LoginStudentDto, @Res({ passthrough: true }) res: Response): Promise<{ success: boolean; message: string }> {
         const result = await this.authService.login(loginStudentDto);
         res.cookie('token', result, { httpOnly: true, sameSite: 'strict', secure: true, maxAge: 3600000 });  // met rekenmachine berekend (24 * 60 * 60 * 1000) = 3600000 ms = 1 uur
-        return { message: 'Inloggen gelukt' };
+        return { success: true, message: 'Inloggen gelukt' };
     }
+    @UseGuards(AuthGuard)
+    @HttpCode(HttpStatus.OK)
     @Post('logout')
-    async logout(@Res({ passthrough: true }) res: Response): Promise<{ message: string }> {
-        res.clearCookie('token');
-        return { message: 'Uitloggen gelukt' };
+    async logout(@Res({ passthrough: true }) res: Response): Promise<{ success: boolean; message: string }> {
+        res.clearCookie('token', { httpOnly: true, sameSite: 'strict', secure: true, path: '/' });
+        return { success: true, message: 'Uitloggen gelukt' };
+    }
+
+    @UseGuards(AuthGuard)
+    @HttpCode(HttpStatus.OK)
+    @Get('user')
+    async getProfile(@Req() req): Promise<any> {
+        const user = req.user; // Haal de gebruiker op uit het request object dat door de AuthGuard is toegevoegd
+        return { user };
     }
 }
