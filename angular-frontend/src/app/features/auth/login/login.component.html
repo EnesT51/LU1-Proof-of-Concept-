@@ -1,0 +1,30 @@
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg border-0 rounded-4" style="max-width: 900px; width: 100%;">
+        <div class="card-body p-5">
+            <h2 class="fw-bold text-center mb-4">Inloggen</h2>
+            <p class="text-center text-muted mb-5">Voer je inloggegevens in om verder te gaan</p>
+            <div class="alert alert-danger d-none" id="error-message">
+            </div>
+            <form (ngSubmit)="login()" method="POST" novalidate>
+                <div class="mb-3">
+                    <label class="form-label">Emailadres</label>
+                    <input type="email" name="email" class="form-control form-control-lg" placeholder="naam@email.com"
+                        [(ngModel)]="loginForm.email" />
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Wachtwoord</label>
+                    <input type="password" name="password" class="form-control form-control-lg" placeholder="••••••••"
+                        [(ngModel)]="loginForm.password" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm">Inloggen</button>
+            </form>
+            <div class="text-center mt-4">
+                <p class="mb-1 text-muted">Geen account?</p>
+                <a routerLink="/register" class="fw-bold text-decoration-none">Registreer hier</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- hier worden de routes geladen -->
+<router-outlet></router-outlet>
