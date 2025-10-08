@@ -1,0 +1,23 @@
+.glassy-footer {
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 -2px 15px rgba(0, 188, 212, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glassy-footer .nav-link {
+  transition: color 0.2s ease;
+}
+
+.glassy-footer .nav-link:hover {
+  color: #00bcd4 !important;
+}
+
+.glassy-footer .social-icons a {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.glassy-footer .social-icons a:hover {
+  transform: scale(1.15);
+  color: #00e5ff !important;
+}
