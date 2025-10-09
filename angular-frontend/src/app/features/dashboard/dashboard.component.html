@@ -1,5 +1,50 @@
-<div class="dashboard">
-    <h1>Welcome to the Dashboard</h1>
-    <p>This is your main dashboard where you can see an overview of your activities.</p>
-    <!-- Add more dashboard content here -->
+<div class="container py-5">
+    <h2 class="fw-bold text-primary mb-4 text-center">Beschikbare Modules</h2>
+
+    <div class="row g-4">
+
+        <div class="container my-4">
+            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+
+                <div class="flex-grow-1" style="max-width: 600px;">
+                    <app-searchbar (search)="onSearch($event)"></app-searchbar>
+                </div>
+
+                <div style="min-width: 250px;" class="mb-4 mt-md-0">
+                    <app-dropdown label="Filter op locatie"
+                        [options]="[ { value: 'all', label: 'Alle locaties' }, { value: 'Breda', label: 'Breda' }, { value: 'Den-Haag', label: 'Den Haag' }, { value: 'Eindhoven', label: 'Eindhoven' }, { value: 'Rotterdam', label: 'Rotterdam' } ]"
+                        (selectionChange)="onFilterChange($event)">
+                    </app-dropdown>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-lg-4" *ngFor="let module of modules">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-body d-flex flex-column p-4">
+
+                    <h5 class="fw-bold text-dark mb-2">{{ module.name }}</h5>
+                    <p class="text-muted small mb-3">{{ module.shortdescription }}</p>
+
+                    <ul class="list-unstyled small mb-3">
+                        <li><strong>Locatie:</strong> {{ module.location }}</li>
+                        <li><strong>Niveau:</strong> {{ module.level }}</li>
+                        <li><strong>Studiepunten:</strong> {{ module.studycredit }}</li>
+                    </ul>
+
+                    <p class="text-muted small mb-3">
+                        <strong>Leeruitkomsten:</strong> {{ module.learningoutcomes }}
+                    </p>
+
+                    <div class="mt-auto">
+                        <a class="btn btn-outline-primary w-100 fw-semibold">
+                            Bekijk details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
