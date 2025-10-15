@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, map, catchError, scheduled, tap, asyncScheduler } from "rxjs";
+import { Observable, map, catchError, scheduled, asyncScheduler } from "rxjs";
 import { environment } from "../../../environments/env.dev";
 import { VKMModule } from "../../shared/models/vkm.model";
 
@@ -10,7 +10,6 @@ import { VKMModule } from "../../shared/models/vkm.model";
 })
 export class ModuleService {
     private apiUrl = `${environment.apiUrl}`;
-    private modules: VKMModule[] = [];
 
     constructor(private http: HttpClient) { }
 

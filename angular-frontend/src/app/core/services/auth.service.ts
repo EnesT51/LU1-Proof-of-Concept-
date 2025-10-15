@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Observable, map, catchError, of, tap } from "rxjs";
+import { Observable, map, catchError, scheduled, tap, asyncScheduler } from "rxjs";
 import { environment } from "../../../environments/env.dev";
 import { Login } from "../../shared/models/login..model";
 import { Register } from "../../shared/models/register.model";
@@ -46,7 +46,7 @@ export class AuthService {
         return this.http.get<{ success: boolean }>(`${this.apiUrl}/user`, { withCredentials: true })
         .pipe(
             map((res) => { this.isAuthenticated(res.success); return this._isAuthenticated; }),
-            catchError(() => of(false))
+            catchError(() => scheduled([false], asyncScheduler))
         );
     }
     private isAuthenticated(value: boolean) {
@@ -55,6 +55,6 @@ export class AuthService {
     private handleError(error: HttpErrorResponse) {
         let errorMessage = error.message;
         console.error("An error occurred:", errorMessage);
-        return of(false);
+        return scheduled([false], asyncScheduler);
     }
 }

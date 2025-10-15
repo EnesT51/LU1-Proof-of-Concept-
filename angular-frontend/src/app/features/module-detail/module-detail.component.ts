@@ -25,14 +25,11 @@ export class ModuleDetailComponent {
         if (!id){
             this.setLoading(false);
             this.setError('Ongeldig module ID');
-            console.error('Ongeldig module ID');
             return;
         }
         this.setLoading(true);
-        this.moduleService.getModuleById(id).subscribe(
-            
+        this.moduleService.getModuleById(id).subscribe(  
             (data) => {
-                console.log('Module data:', data);
                 this.module = data;
                 this.setLoading(false);
             }

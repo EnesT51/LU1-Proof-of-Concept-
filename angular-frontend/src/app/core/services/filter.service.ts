@@ -1,6 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Observable, map, catchError, scheduled, tap, asyncScheduler } from "rxjs";
-import { environment } from "../../../environments/env.dev";
 import { VKMModule } from "../../shared/models/vkm.model";
 
 @Injectable({

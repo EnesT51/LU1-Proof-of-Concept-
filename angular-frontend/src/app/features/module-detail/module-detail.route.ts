@@ -5,7 +5,7 @@ import { AuthGuard } from "../../core/guards/auth.guard";
 export const moduleDetailRoutes: Routes = [
     { path: '',
         children: [
-            { path: '', component: ModuleDetailComponent, canActivate: [AuthGuard] }
+            { path: 'vkm/:id', component: ModuleDetailComponent, canActivate: [AuthGuard] }
         ]
     }
 ];

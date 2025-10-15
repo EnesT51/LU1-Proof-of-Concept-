@@ -1,5 +1,9 @@
 <div class="container py-4">
     @if (isLoading) {
+    <div class="spinner-border text-primary spinner-border-lg" style="width: 60px; height: 60px;" role="status"
+        aria-hidden="true">
+        <span class="visually-hidden">Loading...</span>
+    </div>
     <p class="text-center text-muted">Laden...</p>
     } @else {
     @if (errorMessage) {

@@ -6,6 +6,6 @@ import { moduleDetailRoutes } from './features/module-detail/module-detail.route
 export const routes: Routes = [
     { path: 'keuzemodule', children: dashboardRoutes },
     { path: 'auth', children: authRoutes },
-    { path: 'vkm/:id', children: moduleDetailRoutes },
+    { path: 'detail', children: moduleDetailRoutes },
     { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
 ];
