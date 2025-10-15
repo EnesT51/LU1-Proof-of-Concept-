@@ -1,0 +1,16 @@
+<div class="container py-4">
+    @if (isLoading) {
+    <p class="text-center text-muted">Laden...</p>
+    } @else {
+    @if (errorMessage) {
+    <p class="text-center text-danger">{{ errorMessage }}</p>
+    } @else if (module) {
+    <app-module-card [module]="module"></app-module-card>
+    } @else {
+    <p class="text-center text-muted">Module niet gevonden.</p>
+    }
+    }
+    <div>
+        <a [routerLink]="['/keuzemodule/dashboard']" class="btn btn-primary mt-3">Terug naar overzicht</a>
+    </div>
+</div>

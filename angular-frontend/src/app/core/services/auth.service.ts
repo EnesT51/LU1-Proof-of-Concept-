@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Observable, map, catchError, throwError, of, tap } from "rxjs";
+import { Observable, map, catchError, of, tap } from "rxjs";
 import { environment } from "../../../environments/env.dev";
 import { Login } from "../../shared/models/login..model";
 import { Register } from "../../shared/models/register.model";

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, input, output, EventEmitter } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 
@@ -9,9 +9,10 @@ import { CommonModule } from "@angular/common";
     templateUrl: "./dropdown.component.html",
 })
 export class DropdownComponent {
-    @Input() label: string = "";
-    @Input() options: { value: string; label: string }[] = [];
-    @Output() selectionChange = new EventEmitter<string>();
+
+    label = input<string>('');
+    options = input<{ value: string; label: string }[]>();
+    selectionChange = output<string>();
 
     selectedValue: string = "";
 
