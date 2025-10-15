@@ -14,4 +14,11 @@ export class VkmService {
             throw error;
         }
     }
+    async getOne(id: string): Promise<VkmModule | null> {
+        try{
+            return this.vkmRepository.getOne(id);
+        } catch (error) {
+            throw error;
+        }
+    }
 }

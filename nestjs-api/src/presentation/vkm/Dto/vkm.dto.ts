@@ -1,14 +1,23 @@
-
-
-export interface VkmDto {
+import {IsNotEmpty} from "class-validator";
     
-    id: string,
-    name: string,
-    studycredit: number,
-    location: string,
-    level: string,
-    interests_match_score: number,
-    available_spots: number,
-    start_date: string
+export class VkmDto {
+    @IsNotEmpty()
+    id: number;
+    @IsNotEmpty()
+    name: string;
+    @IsNotEmpty()
+    description: string;
+    @IsNotEmpty()
+    shortdescription: string;
+    @IsNotEmpty()
+    content: string;
+    @IsNotEmpty()
+    location: string;
+    @IsNotEmpty()
+    studycredit: number;
+    @IsNotEmpty()
+    level: string;
+    @IsNotEmpty()
+    learningoutcomes: string;
 
 }
