@@ -1,15 +1,17 @@
 import { Component } from "@angular/core";
 import { VKMModule } from "../../shared/models/vkm.model";
 import { ModuleCardComponent } from "../../shared/components/module.card/module-card.component";
-import { ModuleService } from "../../core/services/module.service";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
 import { RouterLink } from "@angular/router";
+import { ModuleService } from "./services/module.service";
+import { SpinnerComponent } from "../../shared/components/spinner/spinner.component";
+
 
 @Component({
     selector: "app-module-detail",
     standalone: true,
-    imports: [ModuleCardComponent, CommonModule, RouterLink],
+    imports: [ModuleCardComponent, CommonModule, RouterLink, SpinnerComponent],
     templateUrl: "./module-detail.component.html",
 })
 export class ModuleDetailComponent {
@@ -28,10 +30,20 @@ export class ModuleDetailComponent {
             return;
         }
         this.setLoading(true);
-        this.moduleService.getModuleById(id).subscribe(  
+        this.moduleService.getModuleById(id).subscribe(
             (data) => {
                 this.module = data;
                 this.setLoading(false);
+            }
+        );
+    }
+    addModuleForStudent(moduleId: string): void {
+        this.moduleService.addModuleForStudent(moduleId).subscribe(
+            (response) => {
+                console.log("Module toegevoegd voor student:", response);
+            },
+            (error) => {
+                console.error("Fout bij het toevoegen van module voor student:", error);
             }
         );
     }

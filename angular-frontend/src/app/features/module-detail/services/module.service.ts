@@ -1,9 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, map, catchError, scheduled, asyncScheduler } from "rxjs";
-import { environment } from "../../../environments/env.dev";
-import { VKMModule } from "../../shared/models/vkm.model";
-
+import { environment } from "../../../../environments/env.dev";
+import { VKMModule } from "../../../shared/models/vkm.model";
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +10,7 @@ import { VKMModule } from "../../shared/models/vkm.model";
 export class ModuleService {
     private apiUrl = `${environment.apiUrl}`;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     getModules(): Observable<any> {
         return this.http.get<{ modules: VKMModule[] }>(`${this.apiUrl}/vkm`, { withCredentials: true })
@@ -20,9 +19,22 @@ export class ModuleService {
             catchError(this.handleError)
         );
     }
-
     getModuleById(id: string): Observable<any> {
         return this.http.get<{module: VKMModule}>(`${this.apiUrl}/vkm/${id}`, { withCredentials: true })
+        .pipe(
+            map(response => response),
+            catchError(this.handleError)
+        );
+    }
+    addModuleForStudent(moduleId: string): Observable<any> {
+        return this.http.post<{ message: string }>(`${this.apiUrl}/student/modules/${moduleId}`, {}, { withCredentials: true })
+        .pipe(
+            map(response => response.message),
+            catchError(this.handleError)
+        );
+    }
+    getStudentModules(): Observable<any> {
+        return this.http.get<{ modules: VKMModule[] }>(`${this.apiUrl}/student/`, { withCredentials: true })
         .pipe(
             map(response => response),
             catchError(this.handleError)

@@ -12,4 +12,5 @@ import { CommonModule } from "@angular/common";
 export class ModuleCardComponent {
 
   module = input<VKMModule>();
+  mode = input<string>();
 }

@@ -12,11 +12,12 @@
         <p class="text-muted small mb-3 overflow-auto" style="max-height: 100px;">
             <strong>Leeruitkomsten:</strong> {{ module()?.learningoutcomes }}
         </p>
-
+        @if (mode() === 'dashboard') {
         <div class="mt-auto">
-            <a [routerLink]="['/detail/vkm', module()?.id]" class="btn btn-outline-primary w-100 fw-semibold">
+            <a [routerLink]="['/detail/vkm', module()?._id]" class="btn btn-outline-primary w-100 fw-semibold">
                 Bekijk details
             </a>
         </div>
+        }
     </div>
 </div>

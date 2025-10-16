@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { featureImports } from '../feature.components';
-import { ModuleService } from '../../core/services/module.service';
-import { FilterService } from '../../core/services/filter.service';
+import { FilterService } from './services/filter.service';
 import { VKMModule } from '../../shared/models/vkm.model';
+import { ModuleService } from '../module-detail/services/module.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { VKMModule } from '../../shared/models/vkm.model';
 export class DashboardComponent {
 
   constructor(
-    private dashboardService: ModuleService, 
+    private moduleService: ModuleService, 
     private filterService: FilterService) { }
     
     modules: VKMModule[] = [];
@@ -22,7 +22,7 @@ export class DashboardComponent {
 
     ngOnInit() {
         this.setLoading(true);
-        this.dashboardService.getModules().subscribe(
+        this.moduleService.getModules().subscribe(
             (data) => {
                 this.filterService.setModules(data);
                 this.modules = data;

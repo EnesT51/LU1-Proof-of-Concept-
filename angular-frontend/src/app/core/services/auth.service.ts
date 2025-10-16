@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { signal } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Observable, map, catchError, scheduled, tap, asyncScheduler } from "rxjs";
 import { environment } from "../../../environments/env.dev";
@@ -12,7 +13,7 @@ export class AuthService {
     private apiUrl = `${environment.apiUrl}/auth`;
     private _isAuthenticated = false;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     login(login: Login): Observable<boolean> {
         return this.http.post<{ success: boolean }>(`${this.apiUrl}/login`, login, { withCredentials: true })
@@ -56,5 +57,8 @@ export class AuthService {
         let errorMessage = error.message;
         console.error("An error occurred:", errorMessage);
         return scheduled([false], asyncScheduler);
+    }
+    public isLoggedIn(): boolean {
+        return this._isAuthenticated;
     }
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './../../../core/services/auth.service';
 
 @Component({
     selector: 'app-nav',
@@ -11,4 +12,5 @@ import { CommonModule } from '@angular/common';
 })
 export class NavComponent {
 
+    constructor(public authService: AuthService) {} 
 }
