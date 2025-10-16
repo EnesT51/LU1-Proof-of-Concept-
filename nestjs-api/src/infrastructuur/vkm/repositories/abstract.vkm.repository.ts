@@ -1,4 +1,3 @@
-import { IVkmRepository } from "src/core/vkm/interface/vkm.irepository";
 import { VkmModule } from "src/core/vkm/entities/vkm.entitie";
 
 

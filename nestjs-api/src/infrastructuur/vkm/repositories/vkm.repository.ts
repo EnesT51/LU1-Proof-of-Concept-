@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { AbstractVkmRepository } from "./abstract.vkm.repository";
 import { VkmModule } from "src/core/vkm/entities/vkm.entitie";
-import { Db } from "mongodb";
+import { Db, ObjectId } from "mongodb";
 
 @Injectable()
 export class VkmRepository extends AbstractVkmRepository {
@@ -14,6 +14,6 @@ export class VkmRepository extends AbstractVkmRepository {
     }
     async getOne(id: string): Promise<VkmModule | null> {
         const vkmCollection = this.dbConnection.collection<VkmModule>("vkm");
-        return await vkmCollection.findOne({ id: Number(id) });
+        return await vkmCollection.findOne({ _id: new ObjectId(id) });
     }
 }
