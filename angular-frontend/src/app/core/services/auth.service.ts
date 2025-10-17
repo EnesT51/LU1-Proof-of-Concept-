@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
+import { signal } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Observable, map, catchError, throwError, of, tap } from "rxjs";
+import { Observable, map, catchError, scheduled, tap, asyncScheduler } from "rxjs";
 import { environment } from "../../../environments/env.dev";
-import { Login } from "../../shared/models/login..model";
-import { Register } from "../../shared/models/register.model";
+import { Login } from "../models/login..model";
+import { Register } from "../models/register.model";
 
 @Injectable({
   providedIn: "root",
@@ -12,7 +13,7 @@ export class AuthService {
     private apiUrl = `${environment.apiUrl}/auth`;
     private _isAuthenticated = false;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     login(login: Login): Observable<boolean> {
         return this.http.post<{ success: boolean }>(`${this.apiUrl}/login`, login, { withCredentials: true })
@@ -46,7 +47,7 @@ export class AuthService {
         return this.http.get<{ success: boolean }>(`${this.apiUrl}/user`, { withCredentials: true })
         .pipe(
             map((res) => { this.isAuthenticated(res.success); return this._isAuthenticated; }),
-            catchError(() => of(false))
+            catchError(() => scheduled([false], asyncScheduler))
         );
     }
     private isAuthenticated(value: boolean) {
@@ -55,6 +56,9 @@ export class AuthService {
     private handleError(error: HttpErrorResponse) {
         let errorMessage = error.message;
         console.error("An error occurred:", errorMessage);
-        return of(false);
+        return scheduled([false], asyncScheduler);
+    }
+    public isLoggedIn(): boolean {
+        return this._isAuthenticated;
     }
 }

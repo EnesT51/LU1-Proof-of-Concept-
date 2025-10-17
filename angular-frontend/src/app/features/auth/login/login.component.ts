@@ -1,15 +1,15 @@
 import { Component } from "@angular/core";
 import { AuthService } from "../../../core/services/auth.service";
 import { Router } from "@angular/router";
-import { Login } from "../../../shared/models/login..model";
+import { Login } from "../../../core/models/login..model";
 import { CommonModule , } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { RouterLink, RouterOutlet } from "@angular/router";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, RouterOutlet],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: "./login.component.html",
 })
 export class LoginComponent {
@@ -28,10 +28,9 @@ export class LoginComponent {
                     return;
                 }
                 console.log("Login successful");
-                this.routes.navigate(["/dashboard"]);
+                this.routes.navigate(["/keuzemodule/dashboard"]);
             },
             error: (err) => {
-                // Handle login error
                 console.error("Login failed", err);
             }
         });

@@ -1,0 +1,12 @@
+<div class="dropdown-container my-3">
+    <label class="form-label fw-semibold text-dark mb-2">{{ label() }}</label>
+    <div class="dropdown-wrapper position-relative">
+        <select class="form-select shadow-sm border border-secondary rounded-pill py-2 px-3" [(ngModel)]="selectedValue"
+            (change)="onSelectionChange($event)">
+            <option value="" disabled selected>Kies een optie...</option>
+            <option *ngFor="let option of options()" [value]="option.value">
+                {{ option.label }}
+            </option>
+        </select>
+    </div>
+</div>

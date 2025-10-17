@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
-import { Register } from "../../../shared/models/register.model";
+import { Register } from "../../../core/models/register.model";
 
 
 @Component({
