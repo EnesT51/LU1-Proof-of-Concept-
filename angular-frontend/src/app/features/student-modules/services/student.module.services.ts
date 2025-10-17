@@ -1,7 +1,7 @@
 import { ModuleService } from "../../module-detail/services/module.service";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { VKMModule } from "../../../shared/models/vkm.model";
+import { VKMModule } from "../../../core/models/vkm.model";
 
 
 

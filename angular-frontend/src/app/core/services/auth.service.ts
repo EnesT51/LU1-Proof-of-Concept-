@@ -3,8 +3,8 @@ import { signal } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Observable, map, catchError, scheduled, tap, asyncScheduler } from "rxjs";
 import { environment } from "../../../environments/env.dev";
-import { Login } from "../../shared/models/login..model";
-import { Register } from "../../shared/models/register.model";
+import { Login } from "../models/login..model";
+import { Register } from "../models/register.model";
 
 @Injectable({
   providedIn: "root",

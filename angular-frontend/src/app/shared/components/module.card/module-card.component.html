@@ -19,7 +19,9 @@
             </a>
         </div>
         } @else if (mode() === 'student') {
-        <app-review [moduleId]="module()?._id"></app-review>
+        <a class="btn btn-outline-warning w-100 fw-semibold" [routerLink]="['/reviews', module()?._id]">
+            Review plaatsen
+        </a>
         }
     </div>
 </div>

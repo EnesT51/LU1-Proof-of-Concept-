@@ -1,5 +1,5 @@
 import { Component, input } from "@angular/core";
-import { VKMModule } from "../../models/vkm.model";
+import { VKMModule } from "../../../core/models/vkm.model";
 import { ModuleCardComponent } from "../module.card/module-card.component";
 import { SpinnerComponent } from "../spinner/spinner.component";
 

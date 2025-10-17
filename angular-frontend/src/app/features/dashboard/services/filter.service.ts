@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { VKMModule } from "../../../shared/models/vkm.model";
+import { VKMModule } from "../../../core/models/vkm.model";
 
 @Injectable({
   providedIn: "root",

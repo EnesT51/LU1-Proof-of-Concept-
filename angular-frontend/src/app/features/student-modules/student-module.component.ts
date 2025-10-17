@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { VKMModule } from "../../shared/models/vkm.model";
+import { VKMModule } from "../../core/models/vkm.model";
 import { CommonModule } from "@angular/common";
 import { ModuleListComponent } from "../../shared/components/module-list/module-list.component";
 import { ModuleService } from "../module-detail/services/module.service";
@@ -25,9 +25,11 @@ export class StudentModuleComponent {
                 this.IsLoading = false;
             },
             (error) => {
-                console.error("Fout bij het ophalen van studentmodules:", error);
-                this.IsLoading = false;
+                this.handleError(error);
             }
         );
+    }
+    private handleError(error: any): void {
+        console.error("Fout bij het ophalen van studentmodules:", error);
     }
 }

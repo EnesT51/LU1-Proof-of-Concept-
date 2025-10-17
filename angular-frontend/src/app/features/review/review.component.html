@@ -1,0 +1,44 @@
+<div class="container py-4">
+    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+        <h5 class="fw-bold mb-3">Schrijf een review</h5>
+
+        <form (submit)="onSubmitReview(); $event.preventDefault()">
+            <textarea [value]="reviewText()" (input)="reviewText.set($any($event.target).value)"
+                class="form-control mb-3" placeholder="Wat vond je van deze module?" rows="3" required>
+            </textarea>
+
+            <div class="d-flex align-items-center mb-3">
+                <label class="me-2 text-muted small">Beoordeling:</label>
+                <input type="number" [value]="rating()" (input)="rating.set(($any($event.target).value))"
+                    class="form-control w-25" min="1" max="5" placeholder="1–5" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 fw-semibold" [disabled]="isSubmitting()">
+                {{ isSubmitting() ? 'Bezig...' : 'Review plaatsen' }}
+            </button>
+        </form>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 p-4">
+        <h5 class="fw-bold mb-3">Student reviews</h5>
+
+        @if (isLoading()) {
+        <p class="text-center text-muted py-3">Bezig met laden...</p>
+        } @else if (reviews().length === 0) {
+        <p class="text-center text-muted py-3">Nog geen reviews geplaatst.</p>
+        } @else {
+        @for (review of reviews(); track review._id) {
+        <div class="border-bottom pb-3 mb-3">
+            <p class="mb-1">
+                <strong>{{ review.username }}</strong>
+                <span class="text-warning">⭐ {{ review.rating }}/5</span>
+            </p>
+            <p class="text-muted small mb-1">{{ review.comment }}</p>
+            @if (review.createdAt) {
+            <p class="text-muted small mb-0">{{ review.createdAt }}</p>
+            }
+        </div>
+        }
+        }
+    </div>
+</div>

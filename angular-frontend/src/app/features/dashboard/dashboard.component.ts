@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { featureImports } from '../feature.components';
 import { FilterService } from './services/filter.service';
-import { VKMModule } from '../../shared/models/vkm.model';
+import { VKMModule } from '../../core/models/vkm.model';
 import { ModuleService } from '../module-detail/services/module.service';
 
 
@@ -27,12 +27,17 @@ export class DashboardComponent {
                 this.filterService.setModules(data);
                 this.modules = data;
                 this.setLoading(false);
-            }
-        );
+            }, 
+            (error) => {
+                this.setLoading(false);
+                this.handleError(error);
+            });
     }
     onSearch(searchTerm: string) {
         this.modules = this.filterService.filterModules(searchTerm);
     }
-
+    private handleError(error: any) {
+        console.error('An error occurred:', error);
+    }
     private setLoading(value: boolean) { this.isLoading = value; }
 }

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { VKMModule } from "../../shared/models/vkm.model";
+import { VKMModule } from "../../core/models/vkm.model";
 import { ModuleCardComponent } from "../../shared/components/module.card/module-card.component";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute } from "@angular/router";
