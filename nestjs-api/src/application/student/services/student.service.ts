@@ -1,6 +1,7 @@
 import { AbstractStudentRepository } from "src/core/student/contract/abstract.student.repository";
 import { BadRequestException, ConflictException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import e from "express";
+import { VkmModule } from "src/core/vkm/entities/vkm.entitie";
 
 @Injectable()
 export class StudentService {
@@ -21,7 +22,7 @@ export class StudentService {
             throw new InternalServerErrorException("Error bij toevoegen module aan student");
         }
     }
-    async getStudentModules(studentId: string): Promise<any[]> {
+    async getStudentModules(studentId: string): Promise<VkmModule[]> {
         if (!studentId) {
             throw new BadRequestException("Student ID is verplicht");
         }

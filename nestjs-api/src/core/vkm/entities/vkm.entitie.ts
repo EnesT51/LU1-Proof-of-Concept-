@@ -8,4 +8,5 @@ export interface VkmModule {
     studycredit: number;
     level: string;
     learningoutcomes: string;
+    
 }

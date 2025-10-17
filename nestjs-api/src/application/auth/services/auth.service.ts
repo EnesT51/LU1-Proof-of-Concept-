@@ -1,8 +1,8 @@
 import { BadRequestException, ConflictException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { Student } from "src/core/auth/entities/student.entitie";
 import { AbstractAuthRepository } from "src/core/auth/contract/auth.abstract.repository";
-import { CreateStudentDto } from "src/presentation/auth/Dto/create.student.dto";
-import { LoginStudentDto } from "src/presentation/auth/Dto/login.student.dto";
+import { CreateStudentDto } from "src/application/auth/Dto/create.student.dto";
+import { LoginStudentDto } from "src/application/auth/Dto/login.student.dto";
 import { AbstractHashingService } from "src/core/auth/security/contract/abstract.hashing.service";
 import { AbstractTokenService } from "src/core/auth/security/contract/abstract.token.service";
 

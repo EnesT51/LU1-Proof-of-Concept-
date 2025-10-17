@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, HttpStatus, Param } from "@nestjs/common";
 import { VkmService } from "../../../application/vkm/services/vkm.service";
-import { VkmDto } from "../Dto/vkm.dto";
+import { VkmDto } from "../../../application/vkm/Dto/vkm.dto";
 import { UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/presentation/auth/authguard/auth.guard";
 

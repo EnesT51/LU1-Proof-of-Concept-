@@ -1,7 +1,7 @@
 import { AuthService } from "src/application/auth/services/auth.service";
 import { Body, Controller, Get, Post, Req, Res, UseGuards } from "@nestjs/common";
-import { CreateStudentDto } from "../Dto/create.student.dto";
-import { LoginStudentDto } from "../Dto/login.student.dto";
+import { CreateStudentDto } from "../../../application/auth/Dto/create.student.dto";
+import { LoginStudentDto } from "../../../application/auth/Dto/login.student.dto";
 import type { Response } from "express";
 import { AllowAnonymous } from "../authguard/allowanonymous.decoder";
 import { AuthGuard } from "../authguard/auth.guard";
