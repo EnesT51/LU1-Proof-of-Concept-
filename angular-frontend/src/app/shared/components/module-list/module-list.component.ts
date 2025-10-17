@@ -12,4 +12,5 @@ import { SpinnerComponent } from "../spinner/spinner.component";
 export class ModuleListComponent {
     modules = input<VKMModule[]>([]);
     isLoading = input<boolean>(false);
+    mode = input<string>('dashboard');
 }

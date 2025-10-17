@@ -18,6 +18,8 @@
                 Bekijk details
             </a>
         </div>
+        } @else if (mode() === 'student') {
+        <app-review [moduleId]="module()?._id"></app-review>
         }
     </div>
 </div>

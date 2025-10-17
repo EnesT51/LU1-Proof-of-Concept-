@@ -2,7 +2,7 @@
 <div class="row g-4">
     @for (module of modules(); track module._id) {
     <div class="col-6 col-lg-4">
-        <app-module-card [module]="module" [mode]="'dashboard'"></app-module-card>
+        <app-module-card [module]="module" [mode]="mode()"></app-module-card>
     </div>
     }
 </div>
