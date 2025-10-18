@@ -35,7 +35,7 @@ export class AuthService {
         }
         const isPasswordValid = await this.hashingService.compare(dto.password, student.passwordHash);
         if (!isPasswordValid) {
-            throw new UnauthorizedException("Ongeldig wachtwoord");
+            throw new UnauthorizedException("Ongeldig wachtwoord of email");
         }
         try{
             // hier maak ik de token aan

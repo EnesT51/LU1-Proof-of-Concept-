@@ -1,12 +1,11 @@
 import { IsEmail, IsNotEmpty, Length, Matches } from "class-validator";
 
 export class LoginStudentDto {
-    @IsEmail()
+    @IsEmail({},{ message: 'Ongeldig e-mailadres' })
     @IsNotEmpty()
     email: string;
 
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'Wachtwoord is verplicht' })
     @Length(6, 30)
-    @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/, { message: 'Wachtwoord moet minimaal één hoofdletter, één kleine letter en één cijfer bevatten' })
     password: string;
 }
