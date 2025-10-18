@@ -10,24 +10,51 @@
                     <label class="form-label text-dark">Voornaam</label>
                     <input type="text" name="name" class="form-control form-control-lg border-secondary"
                         placeholder="Voornaam" [(ngModel)]="registerForm.name" />
+
+                    @if(auth.errorObject?.name){
+                    <div class="text-danger mt-1">
+                        {{ auth.errorObject.name }}
+                    </div>
+                    }
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label text-dark">Achternaam</label>
                     <input type="text" name="surname" class="form-control form-control-lg border-secondary"
                         placeholder="Achternaam" [(ngModel)]="registerForm.surname" />
+
+                    @if(auth.errorObject?.surname){
+                    <div class="text-danger mt-1">
+                        {{ auth.errorObject.surname }}
+                    </div>
+                    }
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label text-dark">Emailadres</label>
                     <input type="email" name="email" class="form-control form-control-lg border-secondary"
                         placeholder="naam@email.com" [(ngModel)]="registerForm.email" />
+
+                    @if(auth.errorObject?.email){
+                    <div class="text-danger mt-1">
+                        {{ auth.errorObject.email }}
+                    </div>
+                    } @else if (auth.errorObject?.message) {
+                    <div class="text-danger mt-1">
+                        {{ auth.errorObject.message }}
+                    </div>
+                    }
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label text-dark">Wachtwoord</label>
                     <input type="password" name="password" class="form-control form-control-lg border-secondary"
                         placeholder="••••••••" [(ngModel)]="registerForm.password" />
+                    @if(auth.errorObject?.password){
+                    <div class="text-danger mt-1">
+                        {{ auth.errorObject.password }}
+                    </div>
+                    }
                 </div>
 
                 <div class="mb-3 position-relative">
@@ -40,6 +67,11 @@
                             class="form-control form-control-lg border-secondary date-input"
                             [(ngModel)]="registerForm.birthDate" />
                     </div>
+                    @if(auth.errorObject?.birthDate){
+                    <div class="text-danger mt-1">
+                        {{ auth.errorObject.birthDate }}
+                    </div>
+                    }
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm mt-3 border-0">
