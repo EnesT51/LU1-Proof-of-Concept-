@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { RouterLink } from "@angular/router";
 import { ModuleService } from "./services/module.service";
 import { SpinnerComponent } from "../../shared/components/spinner/spinner.component";
+import { AlertService } from "../../core/services/alert.service";
 
 
 @Component({
@@ -16,7 +17,7 @@ import { SpinnerComponent } from "../../shared/components/spinner/spinner.compon
 })
 export class ModuleDetailComponent {
 
-    constructor(private moduleService: ModuleService, private route: ActivatedRoute) { }
+    constructor(private moduleService: ModuleService, private route: ActivatedRoute, private alertService: AlertService) { }
 
     module: VKMModule = {} as VKMModule;
     isLoading = false;
@@ -40,10 +41,10 @@ export class ModuleDetailComponent {
     addModuleForStudent(moduleId: string): void {
         this.moduleService.addModuleForStudent(moduleId).subscribe(
             (response) => {
-                console.log("Module toegevoegd voor student:", response);
+                this.alertService.show(response.message, 'success');
             },
             (error) => {
-                console.error("Fout bij het toevoegen van module voor student:", error);
+                this.alertService.show(error.message, 'danger');
             }
         );
     }
