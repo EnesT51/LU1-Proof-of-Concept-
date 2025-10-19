@@ -4,19 +4,25 @@ import { ReviewService } from "./services/review.service";
 import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "../../core/services/alert.service";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, FormGroup, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
 
 
 @Component({
     selector: 'app-review',
     templateUrl: './review.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class ReviewComponent {
 
-    constructor(public reviewService: ReviewService, private route: ActivatedRoute, private alertService: AlertService) {
+    form: FormGroup;
+
+    constructor(public reviewService: ReviewService, private route: ActivatedRoute, private alertService: AlertService, formBuilder: FormBuilder) {
         this.reviewService.cleanErrorObject();
+        this.form = formBuilder.group({
+            reviewText: ['', [Validators.required]],
+            rating: [null, [Validators.required, Validators.min(1), Validators.max(5)]]
+        });
     }
     moduleId = signal<string>('');
     reviewText = signal('');
@@ -45,7 +51,13 @@ export class ReviewComponent {
         });
     }
     onSubmitReview() {
-        const submitReview = this.reviewService.mapSubmitReview(this.reviewText(), Number(this.rating())!, this.moduleId());
+
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            return;
+        }
+
+        const submitReview = this.reviewService.mapSubmitReview(this.form.get('reviewText')?.value, Number(this.form.get('rating')?.value), this.moduleId());
         this.isSubmitting.set(true);
         this.reviewService.submitReview(submitReview).subscribe({
             next: (data) => {

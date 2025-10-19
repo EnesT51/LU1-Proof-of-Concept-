@@ -2,11 +2,17 @@
     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
         <h5 class="fw-bold mb-3">Schrijf een review</h5>
 
-        <form (ngSubmit)="onSubmitReview()" novalidate>
-            <textarea [value]="reviewText()" (input)="reviewText.set($any($event.target).value)"
-                class="form-control mb-3" placeholder="Wat vond je van deze module?" rows="3">
+        <form [formGroup]="form" (ngSubmit)="onSubmitReview()" novalidate>
+            <textarea formControlName="reviewText" class="form-control mb-3" placeholder="Wat vond je van deze module?"
+                rows="3">
             </textarea>
-            @if(reviewService.errorObject.comment){
+            @if(form.get('reviewText')?.invalid && form.get('reviewText')?.touched){
+            <div class="text-danger mb-3">
+                @if(form.get('reviewText')?.errors?.['required']){
+                Review tekst is verplicht
+                }
+            </div>
+            } @else if(reviewService.errorObject.comment){
             <div class="text-danger mb-3">
                 {{ reviewService.errorObject.comment }}
             </div>
@@ -14,10 +20,19 @@
 
             <div class="d-flex align-items-center mb-3">
                 <label class="me-2 text-muted small">Beoordeling:</label>
-                <input type="number" [value]="rating()" (input)="rating.set(($any($event.target).value))"
-                    class="form-control w-25" min="1" max="5" placeholder="1–5" />
+                <input type="number" formControlName="rating" class="form-control w-25" min="1" max="5"
+                    placeholder="1–5" />
             </div>
-            @if(reviewService.errorObject.rating){
+            @if(form.get('rating')?.invalid && form.get('rating')?.touched){
+            <div class="text-danger mb-3">
+                @if(form.get('rating')?.errors?.['required']){
+                Beoordeling is verplicht
+                } @else if(form.get('rating')?.errors?.['min'] || form.get('rating')?.errors?.['max']){
+                Beoordeling moet tussen 1 en 5 liggen
+                }
+            </div>
+            }
+            @else if(reviewService.errorObject.rating){
             <div class="text-danger mb-3">
                 {{ reviewService.errorObject.rating }}
             </div>

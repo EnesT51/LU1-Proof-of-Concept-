@@ -8,12 +8,23 @@
 
             <div class="alert alert-danger d-none" id="error-message"></div>
 
-            <form (ngSubmit)="login()" method="POST" novalidate>
+            <form [formGroup]="form" (ngSubmit)="login()" method="POST" novalidate>
                 <div class="mb-3">
                     <label class="form-label text-dark">Emailadres</label>
                     <input type="email" name="email" class="form-control form-control-lg border-secondary"
-                        placeholder="naam@email.com" [(ngModel)]="loginForm.email" />
-                    @if(authService.errorObject?.email){
+                        placeholder="naam@email.com" formControlName="email" />
+
+                    @if(form.get('email')?.invalid && form.get('email')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('email')?.errors?.['required']){
+                        Email is verplicht
+                        } @else if(form.get('email')?.errors?.['email']){
+                        Ongeldig emailadres
+                        }
+                    </div>
+
+                    }
+                    @else if(authService.errorObject?.email){
                     <div class="text-danger mt-1">
                         {{ authService.errorObject.email }}
                     </div>
@@ -22,9 +33,18 @@
                 <div class="mb-4">
                     <label class="form-label text-dark">Wachtwoord</label>
                     <input type="password" name="password" class="form-control form-control-lg border-secondary"
-                        placeholder="••••••••" [(ngModel)]="loginForm.password" />
+                        placeholder="••••••••" formControlName="password" />
 
-                    @if(authService.errorObject?.password){
+                    @if(form.get('password')?.invalid && form.get('password')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('password')?.errors?.['required']){
+                        Wachtwoord is verplicht
+                        } @else if(form.get('password')?.errors?.['minlength']){
+                        Wachtwoord moet minstens 6 tekens bevatten
+                        }
+                    </div>
+                    }
+                    @else if(authService.errorObject?.password){
                     <div class="text-danger mt-1">
                         {{ authService.errorObject.password }}
                     </div>

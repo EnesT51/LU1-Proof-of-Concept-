@@ -5,13 +5,21 @@
             <h2 class="fw-bold text-center mb-4 text-dark">Registreren</h2>
             <p class="text-center text-muted mb-4">Maak een nieuw account aan om verder te gaan</p>
 
-            <form (ngSubmit)="register()" method="POST" novalidate>
+            <form [formGroup]="form" (ngSubmit)="register()" method="POST" novalidate>
                 <div class="mb-3">
                     <label class="form-label text-dark">Voornaam</label>
                     <input type="text" name="name" class="form-control form-control-lg border-secondary"
-                        placeholder="Voornaam" [(ngModel)]="registerForm.name" />
+                        placeholder="Voornaam" formControlName="name" />
 
-                    @if(auth.errorObject?.name){
+                    @if(form.get('name')?.invalid && form.get('name')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('name')?.errors?.['required']){
+                        Voornaam is verplicht
+                        }
+                    </div>
+                    }
+
+                    @else if(auth.errorObject?.name){
                     <div class="text-danger mt-1">
                         {{ auth.errorObject.name }}
                     </div>
@@ -21,9 +29,15 @@
                 <div class="mb-3">
                     <label class="form-label text-dark">Achternaam</label>
                     <input type="text" name="surname" class="form-control form-control-lg border-secondary"
-                        placeholder="Achternaam" [(ngModel)]="registerForm.surname" />
+                        placeholder="Achternaam" formControlName="surname" />
 
-                    @if(auth.errorObject?.surname){
+                    @if(form.get('surname')?.invalid && form.get('surname')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('surname')?.errors?.['required']){
+                        Achternaam is verplicht
+                        }
+                    </div>
+                    } @else if(auth.errorObject?.surname){
                     <div class="text-danger mt-1">
                         {{ auth.errorObject.surname }}
                     </div>
@@ -33,9 +47,17 @@
                 <div class="mb-3">
                     <label class="form-label text-dark">Emailadres</label>
                     <input type="email" name="email" class="form-control form-control-lg border-secondary"
-                        placeholder="naam@email.com" [(ngModel)]="registerForm.email" />
+                        placeholder="naam@email.com" formControlName="email" />
 
-                    @if(auth.errorObject?.email){
+                    @if(form.get('email')?.invalid && form.get('email')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('email')?.errors?.['required']){
+                        Email is verplicht
+                        } @else if(form.get('email')?.errors?.['email']){
+                        Ongeldig emailadres
+                        }
+                    </div>
+                    }@else if(auth.errorObject?.email){
                     <div class="text-danger mt-1">
                         {{ auth.errorObject.email }}
                     </div>
@@ -49,8 +71,17 @@
                 <div class="mb-3">
                     <label class="form-label text-dark">Wachtwoord</label>
                     <input type="password" name="password" class="form-control form-control-lg border-secondary"
-                        placeholder="••••••••" [(ngModel)]="registerForm.password" />
-                    @if(auth.errorObject?.password){
+                        placeholder="••••••••" formControlName="password" />
+
+                    @if(form.get('password')?.invalid && form.get('password')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('password')?.errors?.['required']){
+                        Wachtwoord is verplicht
+                        } @else if(form.get('password')?.errors?.['minlength']){
+                        Wachtwoord moet minstens 6 tekens bevatten
+                        }
+                    </div>
+                    } @else if(auth.errorObject?.password){
                     <div class="text-danger mt-1">
                         {{ auth.errorObject.password }}
                     </div>
@@ -65,9 +96,17 @@
                         </span>
                         <input type="date" name="birthdate"
                             class="form-control form-control-lg border-secondary date-input"
-                            [(ngModel)]="registerForm.birthDate" />
+                            formControlName="birthDate" />
                     </div>
-                    @if(auth.errorObject?.birthDate){
+                    @if(form.get('birthDate')?.invalid && form.get('birthDate')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('birthDate')?.errors?.['required']){
+                        Geboortedatum is verplicht
+                        } @else if(form.get('birthDate')?.errors?.['minlength']){
+                        Geboortedatum moet een geldige datum zijn
+                        }
+                    </div>
+                    } @else if(auth.errorObject?.birthDate){
                     <div class="text-danger mt-1">
                         {{ auth.errorObject.birthDate }}
                     </div>
