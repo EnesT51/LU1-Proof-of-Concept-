@@ -1,0 +1,70 @@
+<div class="container vh-100 d-flex justify-content-center align-items-center bg-light rounded-3">
+    <div class="card shadow-lg border-0 rounded-4"
+        style="max-width: 900px; width: 50%; background-color: #ffffff; color: #212529;">
+        <div class="card-body p-5">
+            <h2 class="fw-bold text-center mb-4 text-dark">Inloggen</h2>
+            <p class="text-center text-muted mb-5">Voer je inloggegevens in om verder te gaan</p>
+
+
+            <div class="alert alert-danger d-none" id="error-message"></div>
+
+            <form [formGroup]="form" (ngSubmit)="login()" method="POST" novalidate>
+                <div class="mb-3">
+                    <label class="form-label text-dark">Emailadres</label>
+                    <input type="email" name="email" class="form-control form-control-lg border-secondary"
+                        placeholder="naam@email.com" formControlName="email" />
+
+                    @if(form.get('email')?.invalid && form.get('email')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('email')?.errors?.['required']){
+                        Email is verplicht
+                        } @else if(form.get('email')?.errors?.['email']){
+                        Ongeldig emailadres
+                        }
+                    </div>
+
+                    }
+                    @else if(authService.errorObject?.email){
+                    <div class="text-danger mt-1">
+                        {{ authService.errorObject.email }}
+                    </div>
+                    }
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-dark">Wachtwoord</label>
+                    <input type="password" name="password" class="form-control form-control-lg border-secondary"
+                        placeholder="••••••••" formControlName="password" />
+
+                    @if(form.get('password')?.invalid && form.get('password')?.touched){
+                    <div class="text-danger mt-1">
+                        @if(form.get('password')?.errors?.['required']){
+                        Wachtwoord is verplicht
+                        } @else if(form.get('password')?.errors?.['minlength']){
+                        Wachtwoord moet minstens 6 tekens bevatten
+                        }
+                    </div>
+                    }
+                    @else if(authService.errorObject?.password){
+                    <div class="text-danger mt-1">
+                        {{ authService.errorObject.password }}
+                    </div>
+                    } @else if(authService.errorObject?.message){
+                    <div class="text-danger mt-1">
+                        {{ authService.errorObject.message }}
+                    </div>
+                    }
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm border-0">
+                    Inloggen
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="mb-1 text-muted">Geen account?</p>
+                <a routerLink="/auth/register" class="fw-bold text-decoration-none text-primary">
+                    Registreer hier
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

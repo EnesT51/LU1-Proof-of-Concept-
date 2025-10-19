@@ -1,0 +1,32 @@
+.dropdown-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.dropdown-wrapper {
+  position: relative;
+}
+
+.form-select {
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.form-select:focus + .dropdown-icon {
+  transform: translateY(-50%) rotate(180deg);
+}

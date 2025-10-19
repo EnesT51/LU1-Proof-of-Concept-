@@ -1,0 +1,23 @@
+.searchbar {
+  transition: all 0.3s ease;
+}
+
+.searchbar:focus-within {
+  border-color: #007bff !important;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.15);
+}
+
+input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+button.btn-primary {
+  background: linear-gradient(90deg, #007bff, #00bcd4);
+  border: none;
+  transition: background 0.2s ease;
+}
+
+button.btn-primary:hover {
+  background: linear-gradient(90deg, #0056b3, #0097a7);
+}

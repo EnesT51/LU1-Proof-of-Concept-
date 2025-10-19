@@ -1,0 +1,21 @@
+<div class="container py-4">
+    @if (isLoading) {
+    <app-spinner></app-spinner>
+    } @else {
+    @if (errorMessage) {
+    <p class="text-center text-danger">{{ errorMessage }}</p>
+    } @else if (module) {
+    <app-module-card [module]="module"></app-module-card>
+    } @else {
+    <p class="text-center text-muted">Module niet gevonden.</p>
+    }
+    }
+    <div class="mt-auto">
+        <button (click)="addModuleForStudent(module._id)" class="btn btn-outline-success w-100 fw-semibold">
+            Registreer voor deze module
+        </button>
+    </div>
+    <div>
+        <a [routerLink]="['/keuzemodule/dashboard']" class="btn btn-primary mt-3">Terug naar overzicht</a>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+@if (modules().length !== 0) {
+<div class="row g-4">
+    @for (module of modules(); track module._id) {
+    <div class="col-6 col-lg-4">
+        <app-module-card [module]="module" [mode]="mode()"></app-module-card>
+    </div>
+    }
+</div>
+} @else {
+@if (isLoading()) {
+<app-spinner></app-spinner>
+} @else {
+<p class="text-center text-muted fw-semibold">Geen modules gevonden.</p>
+}
+}

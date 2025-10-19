@@ -1,0 +1,18 @@
+<div class="container py-5">
+    <h2 class="fw-bold text-primary mb-4 text-center">Beschikbare Modules</h2>
+
+    <div class="row g-4">
+        <div class="container my-4">
+            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+
+                <div class="flex-grow-1" style="max-width: 600px;">
+                    <app-searchbar (search)="onSearch($event)"></app-searchbar>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <app-module-list class="container mt-4" [modules]="modules" [isLoading]="isLoading"></app-module-list>
+        </div>
+    </div>
+</div>

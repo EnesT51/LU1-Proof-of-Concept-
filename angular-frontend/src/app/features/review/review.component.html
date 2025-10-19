@@ -1,0 +1,71 @@
+<div class="container py-4">
+    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+        <h5 class="fw-bold mb-3">Schrijf een review</h5>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmitReview()" novalidate>
+            <textarea formControlName="reviewText" class="form-control mb-3" placeholder="Wat vond je van deze module?"
+                rows="3">
+            </textarea>
+            @if(form.get('reviewText')?.invalid && form.get('reviewText')?.touched){
+            <div class="text-danger mb-3">
+                @if(form.get('reviewText')?.errors?.['required']){
+                Review tekst is verplicht
+                }
+            </div>
+            } @else if(reviewService.errorObject.comment){
+            <div class="text-danger mb-3">
+                {{ reviewService.errorObject.comment }}
+            </div>
+            }
+
+            <div class="d-flex align-items-center mb-3">
+                <label class="me-2 text-muted small">Beoordeling:</label>
+                <input type="number" formControlName="rating" class="form-control w-25" min="1" max="5"
+                    placeholder="1–5" />
+            </div>
+            @if(form.get('rating')?.invalid && form.get('rating')?.touched){
+            <div class="text-danger mb-3">
+                @if(form.get('rating')?.errors?.['required']){
+                Beoordeling is verplicht
+                } @else if(form.get('rating')?.errors?.['min'] || form.get('rating')?.errors?.['max']){
+                Beoordeling moet tussen 1 en 5 liggen
+                }
+            </div>
+            }
+            @else if(reviewService.errorObject.rating){
+            <div class="text-danger mb-3">
+                {{ reviewService.errorObject.rating }}
+            </div>
+            }
+            <button [disabled]="isSubmitting() || !!reviewService.errorObject" type="submit"
+                class="btn btn-primary w-100 fw-semibold" [disabled]="isSubmitting()">
+                {{ isSubmitting() ? 'Bezig...' : 'Review plaatsen' }}
+            </button>
+        </form>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 p-4">
+        <h5 class="fw-bold mb-3">Student reviews</h5>
+
+        @if (isLoading()) {
+        <p class="text-center text-muted py-3">Bezig met laden...</p>
+        } @else if (reviews().length === 0) {
+        <p class="text-center text-muted py-3">Nog geen reviews geplaatst.</p>
+        } @else {
+        @for (review of reviews(); track review._id) {
+        <div class="border-bottom pb-3 mb-3">
+            <p class="mb-1">
+                <strong>{{ review.username }}</strong>
+                <span class="text-warning">
+                    {{ review.rating == 1 ? "⭐" : review.rating == 2 ? "⭐⭐" : review.rating == 3 ? "⭐⭐⭐" : review.rating == 4 ? "⭐⭐⭐⭐" : "⭐⭐⭐⭐⭐" }}/5</span>
+            </p>
+            <p class="text-muted small mb-1">{{ review.comment }}</p>
+            @if (review.createdAt) {
+            <p class="text-muted small mb-0">
+                {{ review.createdAt.indexOf("T") !== -1 ? review.createdAt.split("T")[0] : review.createdAt }}</p>
+            }
+        </div>
+        }
+        }
+    </div>
+</div>
