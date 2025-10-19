@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
-import e from 'express';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {logger: ['log', 'error', 'warn', 'debug', 'verbose']});
@@ -23,7 +22,12 @@ async function bootstrap() {
             return new BadRequestException(errorObject);
         }
     }));
-    app.enableCors({origin: 'http://localhost:4200', credentials: true});
+
+    if (process.env.PRODUCTION === 'true') {
+        app.enableCors({origin: process.env.ORIGIN, credentials: true});
+    }else {
+        app.enableCors({origin: 'http://localhost:4200', credentials: true});
+    }
     await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
