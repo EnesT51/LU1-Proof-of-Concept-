@@ -16,7 +16,7 @@ export class ReviewController {
     @UseGuards(AuthGuard)
     async createReview(@Body() createReviewDTO: CreateReviewDTO, @Req() req: any): Promise<{ message: string, data: ReviewDTO }> {
         const createdReview = await this.reviewService.createReview(createReviewDTO, req.user.sub, req.user.id);
-        return { message: "Review created successfully", data: createdReview };
+        return { message: "Review met succes geplaatst", data: createdReview };
     }
     @Get(":moduleId")
     @HttpCode(HttpStatus.OK)

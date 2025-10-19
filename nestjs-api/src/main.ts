@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
+import e from 'express';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {logger: ['log', 'error', 'warn', 'debug', 'verbose']});
@@ -9,9 +10,19 @@ async function bootstrap() {
     app.use(cookieParser());
 
     app.useGlobalPipes(new ValidationPipe({ 
-        whitelist: true, 
-        forbidNonWhitelisted: true , 
-        forbidUnknownValues: true}));
+        whitelist: true,
+        transform: true,
+        forbidNonWhitelisted: true,
+        forbidUnknownValues: true,
+        exceptionFactory: (errors) => {
+            const errorObject: Record<string, string> = {};
+            errors.forEach(err => {
+                const firstmessage = Object.values(err.constraints || {})[0];
+                errorObject[err.property] = firstmessage;
+            });
+            return new BadRequestException(errorObject);
+        }
+    }));
     app.enableCors({origin: 'http://localhost:4200', credentials: true});
     await app.listen(process.env.PORT ?? 3000);
 }

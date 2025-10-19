@@ -2,18 +2,28 @@
     <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
         <h5 class="fw-bold mb-3">Schrijf een review</h5>
 
-        <form (submit)="onSubmitReview(); $event.preventDefault()">
+        <form (ngSubmit)="onSubmitReview()" novalidate>
             <textarea [value]="reviewText()" (input)="reviewText.set($any($event.target).value)"
-                class="form-control mb-3" placeholder="Wat vond je van deze module?" rows="3" required>
+                class="form-control mb-3" placeholder="Wat vond je van deze module?" rows="3">
             </textarea>
+            @if(reviewService.errorObject.comment){
+            <div class="text-danger mb-3">
+                {{ reviewService.errorObject.comment }}
+            </div>
+            }
 
             <div class="d-flex align-items-center mb-3">
                 <label class="me-2 text-muted small">Beoordeling:</label>
                 <input type="number" [value]="rating()" (input)="rating.set(($any($event.target).value))"
-                    class="form-control w-25" min="1" max="5" placeholder="1–5" required />
+                    class="form-control w-25" min="1" max="5" placeholder="1–5" />
             </div>
-
-            <button type="submit" class="btn btn-primary w-100 fw-semibold" [disabled]="isSubmitting()">
+            @if(reviewService.errorObject.rating){
+            <div class="text-danger mb-3">
+                {{ reviewService.errorObject.rating }}
+            </div>
+            }
+            <button [disabled]="isSubmitting() || !!reviewService.errorObject" type="submit"
+                class="btn btn-primary w-100 fw-semibold" [disabled]="isSubmitting()">
                 {{ isSubmitting() ? 'Bezig...' : 'Review plaatsen' }}
             </button>
         </form>
@@ -31,11 +41,13 @@
         <div class="border-bottom pb-3 mb-3">
             <p class="mb-1">
                 <strong>{{ review.username }}</strong>
-                <span class="text-warning">⭐ {{ review.rating }}/5</span>
+                <span class="text-warning">
+                    {{ review.rating == 1 ? "⭐" : review.rating == 2 ? "⭐⭐" : review.rating == 3 ? "⭐⭐⭐" : review.rating == 4 ? "⭐⭐⭐⭐" : "⭐⭐⭐⭐⭐" }}/5</span>
             </p>
             <p class="text-muted small mb-1">{{ review.comment }}</p>
             @if (review.createdAt) {
-            <p class="text-muted small mb-0">{{ review.createdAt }}</p>
+            <p class="text-muted small mb-0">
+                {{ review.createdAt.indexOf("T") !== -1 ? review.createdAt.split("T")[0] : review.createdAt }}</p>
             }
         </div>
         }

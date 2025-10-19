@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
-import { signal } from "@angular/core";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable, map, catchError, scheduled, tap, asyncScheduler } from "rxjs";
 import { environment } from "../../../environments/env.dev";
 import { Login } from "../models/login..model";
 import { Register } from "../models/register.model";
+import { handleError } from "../utils/error-mapper.utils";
 
 @Injectable({
   providedIn: "root",
@@ -13,34 +13,36 @@ export class AuthService {
     private apiUrl = `${environment.apiUrl}/auth`;
     private _isAuthenticated = false;
 
+    errorObject: any = {};
+
     constructor(private http: HttpClient) {}
 
-    login(login: Login): Observable<boolean> {
-        return this.http.post<{ success: boolean }>(`${this.apiUrl}/login`, login, { withCredentials: true })
+    login(login: Login): Observable<{ success: boolean, message: string }> {
+        return this.http.post<{ success: boolean, message: string }>(`${this.apiUrl}/login`, login, { withCredentials: true })
         .pipe(
             tap(response => {
                 this.isAuthenticated(response.success);
             }),
-            map(response => response.success),
-            catchError(this.handleError)
+            map(response => response),
+            catchError((err) => handleError(err))
         );
     }
-    register(register: Register): Observable<boolean> {
-        return this.http.post<{ success: boolean }>(`${this.apiUrl}/register`, register, { withCredentials: true })
+    register(register: Register): Observable<{ success: boolean, message: string }> {
+        return this.http.post<{ success: boolean, message: string }>(`${this.apiUrl}/register`, register, { withCredentials: true })
         .pipe(
-            map(response => response.success),
-            catchError(this.handleError)
+            map(response => response),
+            catchError((err) => handleError(err))
         );
     }
 
     logout(): Observable<any> {
-        return this.http.post<{ success: boolean }>(`${this.apiUrl}/logout`, {}, { withCredentials: true })
+        return this.http.post<{ success: boolean, message: string }>(`${this.apiUrl}/logout`, {}, { withCredentials: true })
         .pipe(
             tap(() => {
                 this.isAuthenticated(false);
             }),
             map(response => response.success),
-            catchError(this.handleError)
+            catchError((err) => handleError(err))
         );
     }
     checkAuth(): Observable<boolean> {
@@ -50,13 +52,11 @@ export class AuthService {
             catchError(() => scheduled([false], asyncScheduler))
         );
     }
+    cleanErrorObject() {
+        this.errorObject = {};
+    }
     private isAuthenticated(value: boolean) {
         this._isAuthenticated = value;
-    }
-    private handleError(error: HttpErrorResponse) {
-        let errorMessage = error.message;
-        console.error("An error occurred:", errorMessage);
-        return scheduled([false], asyncScheduler);
     }
     public isLoggedIn(): boolean {
         return this._isAuthenticated;

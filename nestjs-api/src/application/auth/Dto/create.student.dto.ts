@@ -2,29 +2,29 @@ import {IsEmail, IsString, MinLength, MaxLength, IsDateString, IsNotEmpty, Match
 
 
 export class CreateStudentDto {
-    @IsEmail()
-    @IsNotEmpty()
+    @IsEmail({},{ message: 'Ongeldig e-mailadres' })
+    @IsNotEmpty({ message: 'E-mailadres is verplicht' })
     email: string;
 
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'Wachtwoord is verplicht' })
     @MinLength(6)
     @MaxLength(30)
     @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/, { message: 'Wachtwoord moet minimaal één hoofdletter, één kleine letter en één cijfer bevatten' })
     password: string;
 
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'Achternaam is verplicht' })
     @MinLength(2)
     @MaxLength(30)
     surname: string;
 
     @IsString()
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'Voornaam is verplicht' })
     @MinLength(2)
     name: string;
 
     @IsDateString()
-    @IsNotEmpty()
+    @IsNotEmpty({ message: 'Geboortedatum is verplicht' })
     birthDate: Date;
 }
