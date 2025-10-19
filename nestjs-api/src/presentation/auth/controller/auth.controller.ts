@@ -24,14 +24,14 @@ export class AuthController {
     @Post('login')
     async login(@Body() loginStudentDto: LoginStudentDto, @Res({ passthrough: true }) res: Response): Promise<{ success: boolean; message: string }> {
         const result = await this.authService.login(loginStudentDto);
-        res.cookie('token', result, { httpOnly: true, sameSite: 'strict', secure: true, maxAge: 3600000 });  // met rekenmachine berekend (24 * 60 * 60 * 1000) = 3600000 ms = 1 uur
+        res.cookie('token', result, { httpOnly: true, sameSite: 'none', secure: true, maxAge: 3600000 });  // met rekenmachine berekend (24 * 60 * 60 * 1000) = 3600000 ms = 1 uur
         return { success: true, message: 'Inloggen gelukt' };
     }
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK)
     @Post('logout')
     async logout(@Res({ passthrough: true }) res: Response): Promise<{ success: boolean; message: string }> {
-        res.clearCookie('token', { httpOnly: true, sameSite: 'strict', secure: true, path: '/' });
+        res.clearCookie('token', { httpOnly: true, sameSite: 'none', secure: true, path: '/' });
         return { success: true, message: 'Uitloggen gelukt' };
     }
 
